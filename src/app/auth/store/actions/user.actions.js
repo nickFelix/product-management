@@ -107,7 +107,6 @@ export function updateUserShortcuts(shortcuts) {
 			...user,
 			data: {
 				...user.data,
-				shortcuts
 			}
 		};
 

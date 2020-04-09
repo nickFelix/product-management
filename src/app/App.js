@@ -15,6 +15,7 @@ import AppContext from './AppContext';
 import { Auth } from './auth';
 import routes from './fuse-configs/routesConfig';
 import store from './store';
+import "../@now/config/requestConfig";
 
 const jss = create({
 	...jssPreset(),
