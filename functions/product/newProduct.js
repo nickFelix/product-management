@@ -13,13 +13,16 @@ function uploadToStorage(file, fileBktUrl) {
         let fileStr = storageRef.file(fileBktUrl);
 
         fs.createReadStream(file.imgUrl.path)
-            .pipe(fileStr.createWriteStream())
+            .pipe(fileStr.createWriteStream({public: true}))
             .on('error', function (err) {
                 console.error(err);
                 reject()
             })
-            .on('finish', function () {
-                resolve()
+            .on('finish', async function () {
+                
+                let [metadata] = await storageRef.file(fileBktUrl).getMetadata();                
+
+                resolve(metadata.mediaLink);
             });
     })
 }
@@ -41,22 +44,20 @@ module.exports = function (req, res) {
             }
 
             let document = await firestore.collection('products').add(data);
+
             let fileBktUrl = `products/${document.id}/${file.imgUrl.name}`;
 
-            let updtDoc = firestore.doc(`products/${document.id}`).update({ imgUrl: fileBktUrl });
-
-            uploadToStorage(file, fileBktUrl);
-
-            Promise.all([updtDoc, uploadToStorage(file, fileBktUrl)]).then((values) => {
-
+            let publicImgUrl = await uploadToStorage(file, fileBktUrl);
+            
+            firestore.doc(`products/${document.id}`).update({ imgUrl: publicImgUrl }).then(err => {
                 res.status(200).send({
                     err: false,
                     msg: "product saved"
                 });
-
-            }).catch((err) => {
+            }).catch(err => {
                 res.status(500).send('Could not save product');
-            });
+            })
+
 
         });
 
