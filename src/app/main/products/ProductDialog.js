@@ -1,8 +1,7 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import SaveIcon from '@material-ui/icons/Save';
 import TextField from '@material-ui/core/TextField';
@@ -12,8 +11,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import * as productActions from '@now/components/products/products.actions';
+import * as productDialogActions from '@now/components/productDialog/productDialog.action';
 
 const defaultFomrtState = {
+	productId: '',
 	productName: '',
 	fileName: '',
 	file: ''
@@ -23,14 +24,22 @@ const useStyles = makeStyles((theme) => ({
 	button: {
 		margin: theme.spacing(1),
 	},
+	uploadInput: {
+		width: 300
+	}
 }));
 
-export default function NewProductDialog() {
+export default function ProductDialog() {
 
 	const classes = useStyles();
+	const open = useSelector(({ productDialog }) => productDialog.open);
+	const data = useSelector(({ productDialog }) => productDialog.data);
 
-	const [open, setOpen] = React.useState(false);
 	const [form, setForm] = React.useState(defaultFomrtState);
+
+	useEffect(() => {
+		setForm(data)
+	}, [data])
 
 	const dispatch = useDispatch();
 
@@ -41,13 +50,9 @@ export default function NewProductDialog() {
 		})
 	}
 
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
-
 	const handleClose = () => {
 		setForm(defaultFomrtState);
-		setOpen(false);
+		dispatch(productDialogActions.setOpenDialog(false));
 	};
 
 	const handleImgUpload = (params) => {
@@ -65,12 +70,15 @@ export default function NewProductDialog() {
 	}
 
 	const handleSave = () => {
-		dispatch(productActions.saveNewProduct(form))
+		if (form.productId) {
+			dispatch(productActions.saveEditProduct(form))
+		} else {
+			dispatch(productActions.saveNewProduct(form))
+		}
 	}
 
 	return (
 		<div>
-			<Button startIcon={<Icon>add</Icon>} onClick={handleClickOpen}>Produto</Button>
 			<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">Cadastrar Produto</DialogTitle>
 
@@ -97,7 +105,7 @@ export default function NewProductDialog() {
 						Upload File
 						<input type="file" accept="image/*" id="productImg" style={{ display: "none" }} onChange={handleImgUpload} />
 					</Button>
-					<TextField disabled value={form.fileName}></TextField>
+					<TextField disabled value={form.fileName} className={classes.uploadInput}></TextField>
 				</DialogContent>
 
 				<DialogActions>

@@ -45,7 +45,12 @@ export default function ProductList() {
               {
                 e.map((element, innerIndex) => (
                   <Grid item xs={2} key={innerIndex}>
-                    <ProductItem name={element.name} image={element.imgUrl}></ProductItem>
+                    <ProductItem 
+                      id={element.id}
+                      name={element.name} 
+                      image={element.imgUrl}
+                      imageName={element.fileName}>
+                    </ProductItem>
                   </Grid>
                 ))
               }

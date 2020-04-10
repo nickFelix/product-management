@@ -13,14 +13,14 @@ function uploadToStorage(file, fileBktUrl) {
         let fileStr = storageRef.file(fileBktUrl);
 
         fs.createReadStream(file.imgUrl.path)
-            .pipe(fileStr.createWriteStream({public: true}))
+            .pipe(fileStr.createWriteStream({ public: true }))
             .on('error', function (err) {
                 console.error(err);
                 reject()
             })
             .on('finish', async function () {
-                
-                let [metadata] = await storageRef.file(fileBktUrl).getMetadata();                
+
+                let [metadata] = await storageRef.file(fileBktUrl).getMetadata();
 
                 resolve(metadata.mediaLink);
             });
@@ -40,15 +40,15 @@ module.exports = function (req, res) {
             }
 
             let data = {
-                name: fields.name
+                name: fields.name,
+                fileName: file.imgUrl.name,
+                status: 'pending'
             }
 
             let document = await firestore.collection('products').add(data);
-
             let fileBktUrl = `products/${document.id}/${file.imgUrl.name}`;
-
             let publicImgUrl = await uploadToStorage(file, fileBktUrl);
-            
+
             firestore.doc(`products/${document.id}`).update({ imgUrl: publicImgUrl }).then(err => {
                 res.status(200).send({
                     err: false,

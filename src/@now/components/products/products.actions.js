@@ -66,3 +66,34 @@ export function listProducts() {
 			})
 	}
 }
+
+export function saveEditProduct(parameters) {
+	return (dispatch) => {
+
+		dispatch({
+			type: SAVE_PRODUCT
+		});
+
+		let formData = new FormData();
+
+		formData.append('id', parameters.productId);
+		formData.append('name', parameters.productName);
+		formData.append('imgUrl', parameters.file);
+
+		axios({
+			url: 'product/edit',
+			method: 'PUT',
+			data: formData
+		}).then(res => {
+
+			console.log('deu certo');
+
+		}, err => {
+
+			console.error('ops, something went wrong ');
+			console.error(err);
+
+		})
+
+	}
+}

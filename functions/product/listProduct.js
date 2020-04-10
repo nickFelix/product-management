@@ -7,20 +7,25 @@ module.exports = function (req, res) {
 
     let result = [];
 
-    let products = firestore.collection('products').get()
+    firestore.collection('products').get()
       .then(snapshot => {
         if (snapshot.empty) {
 
         }
 
         snapshot.forEach(doc => {
-          result.push(doc.data())
-        })
+
+          let data = doc.data();
+          data.id = doc.id;
+
+          result.push(data);
+
+        });
 
         res.status(200).send({
           err: false,
           result
-        })
+        });
 
       })
       .catch(err => {
