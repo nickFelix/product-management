@@ -5,6 +5,7 @@ import ProductItem from './ProductItem';
 import Grid from '@material-ui/core/Grid';
 import { useDispatch, useSelector } from 'react-redux';
 import * as productActions from '@now/components/products/products.actions';
+import FuseLoading from '@fuse/core/FuseLoading';
 
 const useStyles = makeStyles((theme) => ({
   productRow: {
@@ -13,11 +14,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 export default function ProductList() {
 
   const dispatch = useDispatch();
-  const products = useSelector(({ products }) => products.products)
+  const products = useSelector(({ products }) => products.products);
+  const loading = useSelector(({ products }) => products.loading);
 
   let newProducts = [];
   const classes = useStyles();
@@ -35,29 +36,35 @@ export default function ProductList() {
   }
 
   return (
+
     <Grid item md={12}>
 
-      {newProducts.map((e, index) => {
-        return (
+      {
 
-          <Paper key={index} className={classes.productRow}>
-            <Grid container spacing={3}>
-              {
-                e.map((element, innerIndex) => (
-                  <Grid item xs={2} key={innerIndex}>
-                    <ProductItem 
-                      id={element.id}
-                      name={element.name} 
-                      image={element.imgUrl}
-                      imageName={element.fileName}>
-                    </ProductItem>
-                  </Grid>
-                ))
-              }
-            </Grid>
-          </Paper>
-        )
-      })}
+        loading ?
+          <FuseLoading /> :
+
+          newProducts.map((e, index) => {
+            return (
+
+              <Paper key={index} className={classes.productRow}>
+                <Grid container spacing={3}>
+                  {
+                    e.map((element, innerIndex) => (
+                      <Grid item xs={2} key={innerIndex}>
+                        <ProductItem
+                          id={element.id}
+                          name={element.name}
+                          image={element.imgUrl}
+                          imageName={element.fileName}>
+                        </ProductItem>
+                      </Grid>
+                    ))
+                  }
+                </Grid>
+              </Paper>
+            )
+          })}
     </Grid>
   )
 

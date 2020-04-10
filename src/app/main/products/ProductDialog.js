@@ -10,7 +10,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import * as productActions from '@now/components/products/products.actions';
 import * as productDialogActions from '@now/components/productDialog/productDialog.action';
 
 const defaultFomrtState = {
@@ -57,23 +56,24 @@ export default function ProductDialog() {
 
 	const handleImgUpload = (params) => {
 
+		
 		let tmpFile = params.target.files[0];
 		let fileName = tmpFile ? tmpFile.name : ''
+		let tmpUrl = URL.createObjectURL(tmpFile);
 
-		if (fileName.endsWith(''))
-
-			setForm({
-				...form,
-				fileName,
-				file: tmpFile
-			});
+		setForm({
+			...form,
+			fileName,
+			file: tmpFile,
+			fileUrl: tmpUrl
+		});
 	}
 
 	const handleSave = () => {
 		if (form.productId) {
-			dispatch(productActions.saveEditProduct(form))
+			dispatch(productDialogActions.saveEditProduct(form))
 		} else {
-			dispatch(productActions.saveNewProduct(form))
+			dispatch(productDialogActions.saveNewProduct(form))
 		}
 	}
 
