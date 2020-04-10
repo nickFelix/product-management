@@ -47,10 +47,21 @@ export function listProducts() {
 
 				//dispatch to update product list;
 
+				let result = []
 
+				if (res.data && !res.data.err) {
+					result = res.data.result
+				}
+
+				dispatch({
+					type: PRODUCT_UPDATED,
+					payload: result
+				})
 
 			})
 			.catch(err => {
+				console.error('ops, somethings went wrong');
+				console.error(err);
 
 			})
 	}

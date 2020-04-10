@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper';
 import ProductItem from './ProductItem';
 import Grid from '@material-ui/core/Grid';
+import { useDispatch, useSelector } from 'react-redux';
+import * as productActions from '@now/components/products/products.actions';
 
 const useStyles = makeStyles((theme) => ({
   productRow: {
@@ -11,81 +13,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const products = [
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  },
-  {
-    "name": "Papel",
-    "imgUrl": "https://storage.googleapis.com/download/storage/v1/b/now-test-76d4b.appspot.com/o/products%2F0e41KlRyxcapOQ1LczPa%2FIMG-20181128-WA0173.jpg?generation=1586462294632798&alt=media"
-  }
-]
 
 export default function ProductList() {
 
+  const dispatch = useDispatch();
+  const products = useSelector(({ products }) => products.products)
+
   let newProducts = [];
   const classes = useStyles();
+
+  useEffect(() => {
+    // Run! Like go get some data from an API.
+    dispatch(productActions.listProducts());
+  }, []);
 
   for (let index = 0; index < products.length; index += 6) {
     const element = products[index];
@@ -93,8 +33,6 @@ export default function ProductList() {
     newProducts.push(products.slice(index, index + 6));
 
   }
-
-  console.log(newProducts);
 
   return (
     <Grid item md={12}>
@@ -106,8 +44,8 @@ export default function ProductList() {
             <Grid container spacing={3}>
               {
                 e.map((element, innerIndex) => (
-                  <Grid item xs={2}>
-                    <ProductItem key={innerIndex} name={element.name} image={element.imgUrl}></ProductItem>
+                  <Grid item xs={2} key={innerIndex}>
+                    <ProductItem name={element.name} image={element.imgUrl}></ProductItem>
                   </Grid>
                 ))
               }
