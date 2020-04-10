@@ -28,7 +28,7 @@ export function saveNewProduct(parameters) {
 
 		}, err => {
 
-			console.error('ops, something went wrong');
+			console.error('ops, something went wrong ');
 			console.error(err);
 
 		})
