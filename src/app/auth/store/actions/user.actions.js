@@ -45,7 +45,6 @@ export function createUserSettingsFirebase(authUser) {
 			data: {
 				displayName: authUser.displayName,
 				email: authUser.email,
-				settings: { ...fuseDefaultSettings }
 			}
 		});
 		currentUser.updateProfile(user.data);

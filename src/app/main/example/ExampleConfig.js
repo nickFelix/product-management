@@ -1,4 +1,5 @@
 import Example from './Example';
+import { authRoles } from 'app/auth';
 
 
 const ExampleConfig = {
@@ -12,7 +13,8 @@ const ExampleConfig = {
 			path: '/example',
 			component: Example
 		}
-	]
+    ],
+    auth: authRoles.user,
 };
 
 export default ExampleConfig;

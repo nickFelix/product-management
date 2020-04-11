@@ -30,7 +30,6 @@ class Auth extends Component {
 
 			firebaseService.onAuthStateChanged(authUser => {
 				if (authUser) {
-					this.props.showMessage({ message: 'Logging in with Firebase' });
 
 					/**
 					 * Retrieve user data from Firebase
@@ -41,7 +40,6 @@ class Auth extends Component {
 
 							resolve();
 
-							this.props.showMessage({ message: 'Logged in with Firebase' });
 						},
 						error => {
 							resolve();

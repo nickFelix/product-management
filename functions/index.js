@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 const router = express.Router();
-// const validateFirebaseIdToken = require("./middleware/auth");
+const validateFirebaseIdToken = require("./middleware/auth");
 const helmet = require("helmet");
 
 const corsOptions = {
@@ -27,7 +27,7 @@ const product = require("./product");
 
 app.use(router);
 
-app.use("/product", product);
+app.use("/product", validateFirebaseIdToken, product);
 
 exports.app = functions.https.onRequest(app);
 

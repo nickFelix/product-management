@@ -13,7 +13,7 @@ const devConfig = {
 const requesctConfig = devConfig 
 
 axios.defaults.baseURL = requesctConfig.requestUrl
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 axios.defaults.timeout = 80000;
 // axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 
@@ -21,10 +21,10 @@ axios.interceptors.request.use(async config => {
     let authorization = ""
 
     if (firebase.auth().currentUser) {
-        authorization = firebase.auth().currentUser.ma
+        authorization = firebase.auth().currentUser.xa
     }
     // config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-    // config.headers['Authorization'] = config.headers['Authorization'] ? config.headers['Authorization'] : `Bearer ${authorization}`;
+    config.headers['Authorization'] = config.headers['Authorization'] ? config.headers['Authorization'] : `Bearer ${authorization}`;
 
     return config
 }, (error) => {

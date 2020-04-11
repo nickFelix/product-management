@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/database';
+import 'firebase/firestore';
 import config from './firebaseServiceConfig';
 
 class FirebaseService {
@@ -19,7 +19,7 @@ class FirebaseService {
 			return;
 		}
 		firebase.initializeApp(config);
-		this.db = firebase.database();
+		this.db = firebase.firestore();
 		this.auth = firebase.auth();
 		success(true);
 	}
@@ -29,12 +29,12 @@ class FirebaseService {
 			return false;
 		}
 		return new Promise((resolve, reject) => {
-			this.db
-				.ref(`users/${userId}`)
-				.once('value')
-				.then(snapshot => {
-					const user = snapshot.val();
+			this.db.doc(`users/${userId}`).get()
+				.then(doc => {
+
+					const user = doc.data()
 					resolve(user);
+
 				});
 		});
 	};
@@ -43,7 +43,7 @@ class FirebaseService {
 		if (!firebase.apps.length) {
 			return false;
 		}
-		return this.db.ref(`users/${user.uid}`).set(user);
+		return this.db.doc(`users/${user.uid}`).set(user);
 	};
 
 	onAuthStateChanged = callback => {
