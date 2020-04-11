@@ -50,6 +50,7 @@ const products = (state = initialState, action) => {
 			product = {
 				...product,
 				name: tmpProduct.name,
+				status: tmpProduct.status ? tmpProduct.status : product.status,
 				imgUrl: tmpProduct.imgUrl && tmpProduct.imgUrl !== product.imgUrl ? tmpProduct.imgUrl : product.imgUrl
 			}
 

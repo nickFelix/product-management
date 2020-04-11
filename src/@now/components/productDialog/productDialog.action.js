@@ -71,6 +71,7 @@ export function saveEditProduct(parameters) {
 
     formData.append('id', parameters.productId);
     formData.append('name', parameters.productName);
+    formData.append('status', parameters.status);
     formData.append('imgUrl', parameters.file);
 
     axios({
@@ -93,7 +94,8 @@ export function saveEditProduct(parameters) {
       id: parameters.productId,
       name: parameters.productName,
       imgUrl: parameters.fileUrl,
-      fileName: parameters.fileName
+      fileName: parameters.fileName,
+      status: parameters.status
     }));
 
     dispatch(productDialogActions.setOpenDialog(false));

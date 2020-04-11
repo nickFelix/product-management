@@ -56,7 +56,8 @@ export default function ProductList() {
                           id={element.id}
                           name={element.name}
                           image={element.imgUrl}
-                          imageName={element.fileName}>
+                          imageName={element.fileName}
+                          status={element.status}>
                         </ProductItem>
                       </Grid>
                     ))

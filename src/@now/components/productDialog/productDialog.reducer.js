@@ -1,7 +1,13 @@
 import * as actions from './productDialog.action';
 
 const initialState = {
-  data: {},
+  data: {
+    productId: '',
+    productName: '',
+    fileName: '',
+    file: '',
+    status: ''
+  },
   open: false
 }
 

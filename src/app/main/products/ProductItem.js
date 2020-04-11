@@ -31,6 +31,7 @@ export default function ProductItem(props) {
       productId: props.id,
       productName: props.name,
       fileName: props.imageName,
+      status: props.status
     }))
   }
 
