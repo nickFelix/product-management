@@ -51,7 +51,7 @@ export default function ProductList() {
                 <Grid container spacing={3}>
                   {
                     e.map((element, innerIndex) => (
-                      <Grid item xs={2} key={innerIndex}>
+                      <Grid item xs={6} sm={4} md={2} key={innerIndex}>
                         <ProductItem
                           id={element.id}
                           name={element.name}
