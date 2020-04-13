@@ -7,9 +7,10 @@ const themesConfig = {
 			type: 'light',
 			primary: fuseDark,
 			secondary: {
-				light: skyBlue[100],
-				main: skyBlue[500],
-				dark: skyBlue[900]
+				light: '#C76A1D',
+				main: '#FF994C',
+				dark: '#FFCA7B',
+				contrastText: '#FFF'
 			},
 			background: {
 				paper: '#FFFFFF',

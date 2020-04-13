@@ -1,8 +1,8 @@
-import Example from './Example';
+import CatalogPage from './Catalog';
 import { authRoles } from 'app/auth';
 
 
-const ExampleConfig = {
+const CatalogConfig = {
 	settings: {
 		layout: {
 			config: {}
@@ -10,14 +10,14 @@ const ExampleConfig = {
 	},
 	routes: [
 		{
-			path: '/example',
-			component: Example
+			path: '/catalog',
+			component: CatalogPage
 		}
     ],
     auth: authRoles.user,
 };
 
-export default ExampleConfig;
+export default CatalogConfig;
 
 /**
  * Lazy load Example

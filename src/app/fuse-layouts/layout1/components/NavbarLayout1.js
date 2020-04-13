@@ -36,9 +36,9 @@ function NavbarLayout1(props) {
 				elevation={0}
 				className="flex flex-row items-center flex-shrink h-64 min-h-64 px-12"
 			>
-				<div className="flex flex-1 mx-8">
+				{/* <div className="flex flex-1 mx-8">
 					<Logo />
-				</div>
+				</div> */}
 
 				<Hidden mdDown>
 					<NavbarFoldedToggleButton className="w-40 h-40 p-0" />

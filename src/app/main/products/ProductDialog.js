@@ -153,16 +153,20 @@ export default function ProductDialog() {
 					</Typography>
 
 					<div className={classes.btnGroupWrapper}>
-						<ButtonGroup size="small" aria-label="small outlined button group">
-							{user.role[0] === 'user' ?
-								<Button disabled={form.status !== 'pending' ? true : false}
-									onClick={handleSetAnalysis}>Enviar Para análise</Button>
-								: null}
 
-							{user.role[0] === 'admin' && form.status !== 'pending' ? <Button onClick={() => { handleSetReady(true) }}>Aprovar</Button> : null}
-							{user.role[0] === 'admin' && form.status !== 'pending' ? <Button onClick={() => { handleSetReady(false) }}>Reprovar</Button> : null}
+						{form.productId ? 
+						(
+							<ButtonGroup size="small" aria-label="small outlined button group">
+								{user.role[0] === 'user' ?
+									<Button disabled={form.status !== 'pending' ? true : false}
+										onClick={handleSetAnalysis}>Enviar Para análise</Button>
+									: null}
 
-						</ButtonGroup>
+								{user.role[0] === 'admin' && form.status !== 'pending' ? <Button onClick={() => { handleSetReady(true) }}>Aprovar</Button> : null}
+								{user.role[0] === 'admin' && form.status !== 'pending' ? <Button onClick={() => { handleSetReady(false) }}>Reprovar</Button> : null}
+
+							</ButtonGroup>
+						) : null}
 					</div>
 
 				</MuiDialogTitle>

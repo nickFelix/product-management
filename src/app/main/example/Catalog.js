@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-function ExamplePage(props) {
+function CatalogPage(props) {
 	const classes = useStyles(props);
 	const dispatch = useDispatch();
 
@@ -45,4 +45,4 @@ function ExamplePage(props) {
 	);
 }
 
-export default ExamplePage;
+export default CatalogPage;
