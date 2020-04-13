@@ -4,14 +4,12 @@ import 'firebase/firestore';
 import config from './firebaseServiceConfig';
 
 class FirebaseService {
-	init(success) {
+
+	init() {
 		if (Object.entries(config).length === 0 && config.constructor === Object) {
 			if (process.env.NODE_ENV === 'development') {
-				console.warn(
-					'Missing Firebase Configuration at src/app/services/firebaseService/firebaseServiceConfig.js'
-				);
+				console.warn("Missing Firebase Configuration at src/app/services/firebaseService/firebaseServiceConfig.js");
 			}
-			success(false);
 			return;
 		}
 
@@ -21,7 +19,6 @@ class FirebaseService {
 		firebase.initializeApp(config);
 		this.db = firebase.firestore();
 		this.auth = firebase.auth();
-		success(true);
 	}
 
 	getUserData = userId => {

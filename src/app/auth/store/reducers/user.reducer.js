@@ -1,7 +1,8 @@
 import * as Actions from '../actions';
 
 const initialState = {
-	role: [], // guest
+	isAuthorized: false,
+	role: ['admin'],//guest
 	data: {
 		displayName: 'John Doe',
 		email: 'johndoe@withinpixels.com',

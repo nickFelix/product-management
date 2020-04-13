@@ -48,7 +48,7 @@ function ToolbarLayout1(props) {
 
 						<div className={classes.separator} />
 
-						<FuseSearch />
+						{/* <FuseSearch /> */}
 
 
 					</div>

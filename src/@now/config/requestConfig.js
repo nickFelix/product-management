@@ -3,17 +3,16 @@ import axios from 'axios';
 import firebase from 'firebase/app';
 
 let prodConfig = {
-    requestUrl: 'https://us-central1-globo-test-b15cb.cloudfunctions.net/app' //url do functions pra desenvolvimento
+    requestUrl: 'https://us-central1-now-test-76d4b.cloudfunctions.net/app' //url do functions pra desenvolvimento
 };
 
 const devConfig = {
     requestUrl: 'http://localhost:5000/now-test-76d4b/us-central1/app'   //url local para projeto produção
 };
 
-const requesctConfig = devConfig 
+const requesctConfig = prodConfig 
 
 axios.defaults.baseURL = requesctConfig.requestUrl
-axios.defaults.withCredentials = true;
 axios.defaults.timeout = 80000;
 // axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 

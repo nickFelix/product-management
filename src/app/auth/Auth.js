@@ -11,52 +11,67 @@ class Auth extends Component {
 		waitAuthCheck: true
 	};
 
-	componentDidMount() {
-		return Promise.all([
-			// Comment the lines which you do not use
-			this.firebaseCheck(),
-		]).then(() => {
-			this.setState({ waitAuthCheck: false });
-		});
+	constructor(props) {
+		super(props);
+
+		this.firebaseCheck();
+		
 	}
 
-	firebaseCheck = () =>
-		new Promise(resolve => {
-			firebaseService.init(success => {
-				if (!success) {
-					resolve();
-				}
-			});
+	// componentDidMount() {
+	// 	return Promise.all([
+	// 		// Comment the lines which you do not use
+	// 		this.firebaseCheck(),
+	// 	]).then(() => {
+	// 		this.setState({ waitAuthCheck: false });
+	// 	});
+	// }
 
-			firebaseService.onAuthStateChanged(authUser => {
-				if (authUser) {
+	firebaseCheck = () => {
 
-					/**
-					 * Retrieve user data from Firebase
-					 */
-					firebaseService.getUserData(authUser.uid).then(
-						user => {
-							this.props.setUserDataFirebase(user, authUser);
+		firebaseService.init();
 
-							resolve();
+		firebaseService.onAuthStateChanged(authUser => {
+			if (authUser && !localStorage.registering) {
 
-						},
-						error => {
-							resolve();
-						}
-					);
-				} else {
-					resolve();
-				}
-			});
+				// this.props.showMessage({message: 'Logging in with Firebase'});
 
-			return Promise.resolve();
+				/**
+				 * Retrieve user data from Firebase
+				 */
+				firebaseService.getUserData(authUser.uid).then(user => {
+
+					this.props.setUserData({
+						...user,
+						isAuthorized: true
+					});
+
+
+					// this.props.showMessage({message: 'Logged in with Firebase'});
+				}, error => {
+
+					console.error(error);
+
+				})
+			} else {				
+
+				firebaseService.signOut();
+				this.props.setUserData({ role: [] });
+
+			}
 		});
+
+	}
 
 	render() {
-		return this.state.waitAuthCheck ? <FuseSplashScreen /> : <>{this.props.children}</>;
+		return this.props.isAuthorized || this.props.role.length === 0 ? <React.Fragment children={this.props.children} /> : <FuseSplashScreen />;
 	}
 }
+
+const mapStateToProps = state => ({
+	isAuthorized: state.auth.user.isAuthorized,
+	role: state.auth.user.role
+})
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators(
@@ -71,4 +86,4 @@ function mapDispatchToProps(dispatch) {
 	);
 }
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

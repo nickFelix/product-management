@@ -7,17 +7,8 @@ const router = express.Router();
 const validateFirebaseIdToken = require("./middleware/auth");
 const helmet = require("helmet");
 
-const corsOptions = {
-  origin: true,
-  methods: ['GET', 'POST', 'PUT', 'OPTIONS'],
-//   allowedHeaders: ["Access-Control-Allow-Headers", "Origin", "Content-Type", "Authorization"],
-  credentials: true
-};
-
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions))
 app.use(helmet());
-// app.use(validateFirebaseIdToken);
+app.use(cors());
 
 app.use(bodyParser.json()); // handle json data
 app.use(bodyParser.urlencoded({ extended: true })); // handle URL-encoded data

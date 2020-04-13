@@ -57,29 +57,31 @@ export function createUserSettingsFirebase(authUser) {
 /**
  * Set User Data
  */
-export function setUserData(user) {
-	return dispatch => {
-		/*
+export function setUserData(user)
+{
+    return (dispatch) => {
+
+        /*
         You can redirect the logged-in user to a specific route depending on his role
          */
 
-		// history.location.state = {
-		//     redirectUrl: user.redirectUrl // for example 'apps/academy'
-		// }
+        // history.location.state = {
+        //     redirectUrl: user.redirectUrl // for example 'apps/academy'
+        // }
 
-		/*
+        /*
         Set User Settings
          */
-		dispatch(FuseActions.setDefaultSettings(user.data.settings));
+        // dispatch(setDefaultSettings(user.data.settings));
 
-		/*
+        /*
         Set User Data
          */
-		dispatch({
-			type: SET_USER_DATA,
-			payload: user
-		});
-	};
+        dispatch({
+            type   : SET_USER_DATA,
+            payload: user
+        })
+    }
 }
 
 /**
